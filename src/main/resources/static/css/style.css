@@ -1,0 +1,25 @@
+@charset "ISO-8859-1";
+
+
+body{
+	background-color: #3B9C9C;
+}
+
+.container{
+	margin-top: 20px;
+}
+
+.employee-table-hading{
+	margin-top: 20px;
+	text-align: center;
+	color: white;
+}
+
+.btn-primary, .btn-danger{
+	margin-right:3px;
+	font-size: small;
+}
+
+#addButton{
+	margin-bottom: 10px;
+}
