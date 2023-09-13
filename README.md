@@ -1,0 +1,1 @@
+<a href='https://coveralls.io/github/WahidiBilal/Employee_Application?branch=main'><img src='https://coveralls.io/repos/github/WahidiBilal/Employee_Application/badge.svg?branch=main' alt='Coverage Status' /></a>
