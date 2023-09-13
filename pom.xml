@@ -110,6 +110,15 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>4.3.0</version>
+				<configuration>
+					<repoToken>yourcoverallsprojectrepositorytoken</repoToken>
+				</configuration>
+			</plugin>
+			
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<dependencies>
@@ -168,14 +177,14 @@
 					</targetTests>
 				</configuration>
 			</plugin>
+			
+			
+			
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.8.5</version>
 				<configuration>
-					<excludes>
-						<exclude>>/employeeapp/src/main/java/com/bilal/employeeapp/EmployeeManagementApplication.java</exclude>
-					</excludes>
 					<excludes>
 						<exclude>*/EmployeeManagementApplication.</exclude>
 						<exclude>*/entity/.*</exclude>

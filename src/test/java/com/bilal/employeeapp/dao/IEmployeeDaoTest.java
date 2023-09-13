@@ -1,7 +1,7 @@
 package com.bilal.employeeapp.dao;
 
 
-import com.bilal.employeeapp.model.*;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,6 +14,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.bilal.employeeapp.model.Department;
+import com.bilal.employeeapp.model.Employee;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -35,9 +38,7 @@ public class IEmployeeDaoTest {
 				25,
 				"bilal@gmail.com",
 				200000,
-				new Department(
-						2
-						)
+				null
 				
 				);
 		
@@ -47,9 +48,8 @@ public class IEmployeeDaoTest {
 						25,
 						"ali@gmail.com",
 						200000,
-						new Department(
-								2
-								)
+						null
+								
 						
 						);
 		
@@ -76,9 +76,8 @@ public class IEmployeeDaoTest {
 				25,
 				"bilal@gmail.com",
 				200000,
-				new Department(
-						2
-						)
+				null
+						
 				
 				);
 		
@@ -88,9 +87,9 @@ public class IEmployeeDaoTest {
 						25,
 						"ali@gmail.com",
 						200000,
-						new Department(
-								2
-								)
+						null
+							
+								
 						
 						);
 		

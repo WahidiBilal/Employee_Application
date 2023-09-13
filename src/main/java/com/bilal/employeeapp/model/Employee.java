@@ -2,6 +2,7 @@ package com.bilal.employeeapp.model;
 
 import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -32,7 +33,7 @@ public class Employee {
 	private Integer esalary;
 	
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade= CascadeType.PERSIST )
 	@JoinColumn(name = "did")
 	private Department edepartment;
 	

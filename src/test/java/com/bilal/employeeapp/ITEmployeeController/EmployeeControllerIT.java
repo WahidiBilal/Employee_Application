@@ -55,7 +55,7 @@ public class EmployeeControllerIT {
         employee.setEdob(Date.valueOf("1990-01-01"));
         employee.setEmail("hassan@gmail.com");
         employee.setEsalary(40000);
-        employee.setEdepartment(new Department(2));
+        employee.setEdepartment(null);
         
 
         // Add the employee using the API endpoint
@@ -110,7 +110,7 @@ public class EmployeeControllerIT {
         employee.setEdob(Date.valueOf("1990-01-01"));
         employee.setEmail("hassan@gmail.com");
         employee.setEsalary(40000);
-        employee.setEdepartment(new Department(2));
+        employee.setEdepartment(null);
         
        
         ResponseEntity<String> status = employeeService.addEmployee(employee);
