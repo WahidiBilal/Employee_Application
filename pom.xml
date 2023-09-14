@@ -19,14 +19,14 @@
 		<sonar.organization>wahidibilal</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.coverage.exclusions>
-			*/EmployeeManagementApplication.,
-			*/entity/.*,
-			*/model/.*
+			**/EmployeeManagementApplication.*,
+			**/entity/*.*,
+			**/model/*.*
 		</sonar.coverage.exclusions>
 		<sonar.exclusions>
-			*/EmployeeManagementApplication.,
-			*/entity/.*,
-			*/model/.*
+			**/EmployeeManagementApplication.*,
+			**/entity/*.*,
+			**/model/*.*
 		</sonar.exclusions>
 	</properties>
 	<dependencyManagement>
@@ -224,9 +224,9 @@
 				<version>0.8.5</version>
 				<configuration>
 					<excludes>
-						<exclude>*/EmployeeManagementApplication.</exclude>
-						<exclude>*/entity/.*</exclude>
-						<exclude>*/model/.*</exclude>
+						<exclude>**/EmployeeManagementApplication.*</exclude>
+						<exclude>**/entity/*.*</exclude>
+						<exclude>**/model/*.*</exclude>
 					</excludes>
 				</configuration>
 				<executions>
