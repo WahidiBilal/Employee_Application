@@ -80,7 +80,7 @@ public class StepDefinitions {
     
     @And("the user select the department Development {string}")
     public void the_user_enter_the_department_development(String department) {
-    	 newEmployee.setEdepartment(new Department(department));
+    	 newEmployee.setEdepartment(null);
     }
     
     @And("the user enter the Salary {string}")

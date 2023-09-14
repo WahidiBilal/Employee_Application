@@ -33,7 +33,7 @@ public class Employee {
 	private Integer esalary;
 	
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade= CascadeType.PERSIST )
+	@ManyToOne(fetch = FetchType.EAGER )
 	@JoinColumn(name = "did")
 	private Department edepartment;
 	
