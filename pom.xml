@@ -16,6 +16,18 @@
 	<description>Spring boot rest api employee management system</description>
 	<properties>
 		<java.version>1.8</java.version>
+		<sonar.organization>wahidibilal</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.coverage.exclusions>
+			*/EmployeeManagementApplication.,
+			*/entity/.*,
+			*/model/.*
+		</sonar.coverage.exclusions>
+		<sonar.exclusions>
+			*/EmployeeManagementApplication.,
+			*/entity/.*,
+			*/model/.*
+		</sonar.exclusions>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -28,7 +40,6 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
 	<dependencies>
 		<!-- Spring Boot Dependencies -->
 		<dependency>
@@ -47,7 +58,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<!-- Spring Boot Test Dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -65,9 +75,7 @@
 			<artifactId>mysql-connector-j</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-
 		<!-- Cucumber Dependency (JUnit 4 version) -->
-
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-java</artifactId>
@@ -85,48 +93,39 @@
 			<artifactId>cucumber-spring</artifactId>
 			<version>4.8.1</version>
 		</dependency>
-
-
 		<!-- Add JUnit 4 dependency -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-		<dependency>
+		<!-- 
+			<dependency>
 			<groupId>org.sonarsource.scanner.maven</groupId>
-			<artifactId>sonar-maven-plugin</artifactId>
-			<version>3.9.1.2184</version>
+		<artifactId>sonar-maven-plugin</artifactId>
+		<version>3.9.1.2184</version>
 		</dependency>
 
+		-->
 		<dependency>
 			<groupId>org.eluder.coveralls</groupId>
 			<artifactId>coveralls-maven-plugin</artifactId>
 			<version>4.3.0</version>
 		</dependency>
-
 		<!-- H2 database dependency -->
-
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
-		</dependency><!--$NO-MVN-MAN-VER$-->
-
-
+		</dependency> <!--$NO-MVN-MAN-VER$-->
 		<!-- PI Test for Code Coverage -->
-
 		<dependency>
 			<groupId>org.pitest</groupId>
 			<artifactId>pitest-parent</artifactId>
 			<version>1.1.10</version>
 			<type>pom</type>
 		</dependency>
-
-
 		<!-- Test Containners -->
-
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -147,11 +146,7 @@
 			<artifactId>rest-assured</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-
 	</dependencies>
-
-
 	<build>
 		<plugins>
 			<plugin>
@@ -188,7 +183,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-
 				<dependencies>
 					<dependency>
 						<groupId>org.apache.maven.surefire</groupId>
@@ -197,23 +191,9 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.pitest</groupId>
-				<artifactId>pitest-maven</artifactId>
-				<version>1.1.10</version>
-				<configuration>
-					<targetClasses>
-						<param>com.baeldung.testing.mutation.*</param>
-					</targetClasses>
-					<targetTests>
-						<param>com.baeldung.mutation.test.*</param>
-					</targetTests>
-				</configuration>
 			</plugin>
 			<!-- Coveralls -->
 			<plugin>
@@ -222,8 +202,10 @@
 				<version>4.3.0</version>
 				<configuration>
 					<jacocoReports>
-						<jacocoReport>${project.build.directory}/jacoco-ut/jacoco.xml</jacocoReport>
-						<jacocoReport>${project.build.directory}/jacoco-it/jacoco.xml</jacocoReport>
+						<jacocoReport>
+							${project.build.directory}/jacoco-ut/jacoco.xml</jacocoReport>
+						<jacocoReport>
+							${project.build.directory}/jacoco-it/jacoco.xml</jacocoReport>
 					</jacocoReports>
 					<failOnServiceError>false</failOnServiceError>
 				</configuration>
@@ -235,6 +217,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+			<!-- Jacoco -->
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -261,7 +244,52 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+			<!-- Mutation testing -->
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.4.10</version>
+				<executions>
+					<execution>
+						<id>pit-report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>mutationCoverage</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<targetClasses>
+						<param>com.bilal.employeeapp.controller.*</param>
+						<param>com.bilal.employeeapp.service.*</param>
+						<param>com.bilal.employeeapp.exceptions.*</param>
+					</targetClasses>
+					<excludedTestClasses>
+						<param>com.bilal.employeeapp.controller.WebControllerTest</param>
+						<param>com.bilal.employeeapp.ITWebController.WebControllerIT</param>
+						<param>com.bilal.employeeapp.e2e.CucumberTestRunnerE2E</param>
+					</excludedTestClasses>
+					<targetTests>
+						<param>com.bilal.employeeapp.controller.EmployeeControllerTest</param>
+						<param>com.bilal.employeeapp.service.EmployeeServiceTest</param>
+						<param>com.bilal.employeeapp.ITEmployeeController.EmployeeControllerIT</param>
+					</targetTests>
+					<avoidCallsTo>
+						<avoidCallsTo>java.util.logging</avoidCallsTo>
+						<avoidCallsTo>org.apache.log4j</avoidCallsTo>
+						<avoidCallsTo>org.slf4j</avoidCallsTo>
+						<avoidCallsTo>org.apache.commons.logging</avoidCallsTo>
+					</avoidCallsTo>
+					<mutators>
+						<mutator>DEFAULTS</mutator>
+					</mutators>
+					<mutationThreshold>80</mutationThreshold>
+					<outputFormats>
+						<outputFormat>XML</outputFormat>
+						<outputFormat>HTML</outputFormat>
+					</outputFormats>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
