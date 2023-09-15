@@ -99,14 +99,6 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- 
-			<dependency>
-			<groupId>org.sonarsource.scanner.maven</groupId>
-		<artifactId>sonar-maven-plugin</artifactId>
-		<version>3.9.1.2184</version>
-		</dependency>
-
-		-->
 		<dependency>
 			<groupId>org.eluder.coveralls</groupId>
 			<artifactId>coveralls-maven-plugin</artifactId>
@@ -150,6 +142,10 @@
 	<build>
 		<plugins>
 			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<dependencies>
@@ -190,10 +186,6 @@
 						<version>${maven-surefire-plugin.version}</version>
 					</dependency>
 				</dependencies>
-			</plugin>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<!-- Coveralls -->
 			<plugin>

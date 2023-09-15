@@ -17,11 +17,6 @@ public class EmployeeService {
 	@Autowired
 	public IEmployeeDao employeeDao;
 	
-
-//	public Optional<Employee> findById(Integer eid) {
-//		return employeeDao.findById(eid);
-//	}
-//	
 	
 	public ResponseEntity<List<Employee>> getAllEmployee(){
 		

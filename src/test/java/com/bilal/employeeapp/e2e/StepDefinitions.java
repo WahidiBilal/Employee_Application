@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.bilal.employeeapp.EmployeeManagementApplication;
-import com.bilal.employeeapp.model.Department;
 import com.bilal.employeeapp.model.Employee;
 
 import io.cucumber.java.en.And;
