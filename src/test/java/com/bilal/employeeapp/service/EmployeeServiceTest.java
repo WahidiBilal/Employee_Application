@@ -75,17 +75,6 @@ public class EmployeeServiceTest {
 	    assertEquals(0, response.getBody().size());
 	}
 
-//	@Test
-//	public void testGetAllEmployeeInternalServerError() {
-//	    when(iemployeeDao.findAll()).thenThrow(new RuntimeException("Database error"));
-//
-//	    ResponseEntity<List<Employee>> response = employeeService.getAllEmployee();
-//
-//	    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-//	    assertNotNull(response.getBody());
-//	    assertEquals(0, response.getBody().size());
-//	}
-
 	@Test
 	public void testGetEmployeeById_Success() {
 
@@ -137,145 +126,76 @@ public class EmployeeServiceTest {
 
 	@Test
 	public void testFindByNameNotFound() {
-	    String nameToSearch = "NonExistentName";
+		String nameToSearch = "NonExistentName";
 
-	    when(iemployeeDao.findByName(nameToSearch)).thenReturn(null);
+		when(iemployeeDao.findByName(nameToSearch)).thenReturn(null);
 
-	    ResponseEntity<List<Employee>> response = employeeService.findByName(nameToSearch);
+		ResponseEntity<List<Employee>> response = employeeService.findByName(nameToSearch);
 
-	    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-	    assertNotNull(response.getBody());
-	    assertEquals(0, response.getBody().size());
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+		assertNotNull(response.getBody());
+		assertEquals(0, response.getBody().size());
 	}
 
-
-//	@Test
-//	public void testAddEmployeeSuccessfully() {
-//
-//		Employee employee = new Employee(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com", 6000,
-//				new Department(2));
-//
-//		when(iemployeeDao.save(employee)).thenReturn(employee);
-//
-//		ResponseEntity<String> response = employeeService.addEmployee(employee);
-//
-//		assertEquals(HttpStatus.CREATED, response.getStatusCode());
-//		assertEquals("Employee added successfully", response.getBody());
-//	}
-//
-//	@Test
-//	public void testAddEmployeeInternalServerError() {
-//
-//		Employee employee = new Employee(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com", 6000,
-//				new Department(2));
-//		when(iemployeeDao.save(employee)).thenThrow(new RuntimeException("Database error"));
-//
-//		ResponseEntity<String> response = employeeService.addEmployee(employee);
-//
-//        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-//		assertEquals("Database error", response.getBody());
-//	}
-
-//	@Test
-//	public void testUpdateEmployeeSuccess() {
-//
-//		Employee existingEmployee = new Employee(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com", 6000,
-//				new Department(2));
-//		Employee updatedEmployee = new Employee(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com", 6000,
-//	new Department(2));
-//
-//		when(iemployeeDao.findById(1)).thenReturn(Optional.of(existingEmployee));
-//
-//		when(iemployeeDao.save(existingEmployee)).thenReturn(updatedEmployee);
-//
-//		Employee result = employeeService.updateEmployee(1, updatedEmployee);
-//
-//		assertEquals(updatedEmployee, result);
-//
-//		verify(iemployeeDao, times(1)).findById(1);
-//		verify(iemployeeDao, times(1)).save(existingEmployee);
-//	}
-
-	
-	
 	@Test
-    public void testAddEmployeeSuccess() {
-        // Create a sample EmployeeDTO
-        EmployeeDTO employeeDTO = new EmployeeDTO(); // Initialize with appropriate data
+	public void testAddEmployeeSuccess() {
 
-        // Mock the behavior of the employeeDao.save method
-        Employee savedEmployee = new Employee(); // Create a specific instance of Employee
-        when(iemployeeDao.save(any(Employee.class))).thenReturn(savedEmployee);
+		EmployeeDTO employeeDTO = new EmployeeDTO();
 
-        // Call the addEmployee method
-        ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
+		Employee savedEmployee = new Employee();
+		when(iemployeeDao.save(any(Employee.class))).thenReturn(savedEmployee);
 
-        // Verify the response status code and message
-        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals("Employee added successfully", response.getBody());
+		ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
 
-      
-    }
+		assertEquals(HttpStatus.CREATED, response.getStatusCode());
+		assertEquals("Employee added successfully", response.getBody());
 
+	}
 
-	 @Test
-	    public void testAddEmployeeFailure() {
-	        // Create a sample EmployeeDTO
-	        EmployeeDTO employeeDTO = new EmployeeDTO(); // Create a specific instance of EmployeeDTO
+	@Test
+	public void testAddEmployeeFailure() {
 
-	        // Mock the behavior of the service to simulate a failure
-	        when(employeeService.addEmployee(employeeDTO)).thenReturn(
-	            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Employee added fail"));
+		EmployeeDTO employeeDTO = new EmployeeDTO();
 
-	        // Call the controller method
-	        ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
+		when(employeeService.addEmployee(employeeDTO))
+				.thenReturn(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Employee added fail"));
 
-	        // Verify the response
-	        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-	        assertEquals("Employee added fail", response.getBody());
-	    }
+		ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
 
-	
-	
-	
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+		assertEquals("Employee added fail", response.getBody());
+	}
+
 	@Test
 	public void testUpdateEmployeeSuccess() {
-	    // Create EmployeeDTO objects for existing and updated employees
-	    EmployeeDTO existingEmployeeDTO = new EmployeeDTO(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com", 6000,
-		new Department(2));
-	    EmployeeDTO updatedEmployeeDTO = new EmployeeDTO(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com", 6000,
-		new Department(2));
 
-	    Employee existingEmployee = new Employee(existingEmployeeDTO);
-	    Employee updatedEmployee = new Employee(updatedEmployeeDTO);
+		EmployeeDTO existingEmployeeDTO = new EmployeeDTO(1, "Zakir", Date.valueOf("1984-01-01"), 32,
+				"Zakir@example.com", 6000, new Department(2));
+		EmployeeDTO updatedEmployeeDTO = new EmployeeDTO(1, "Zakir", Date.valueOf("1984-01-01"), 32,
+				"Zakir@example.com", 6000, new Department(2));
 
-	    // Mock findById and save methods of the DAO
-	    when(iemployeeDao.findById(1)).thenReturn(Optional.of(existingEmployee));
-	    when(iemployeeDao.save(existingEmployee)).thenReturn(updatedEmployee);
+		Employee existingEmployee = new Employee(existingEmployeeDTO);
+		Employee updatedEmployee = new Employee(updatedEmployeeDTO);
 
-	    // Call the service method
-	    Employee result = employeeService.updateEmployee(1, updatedEmployeeDTO);
+		when(iemployeeDao.findById(1)).thenReturn(Optional.of(existingEmployee));
+		when(iemployeeDao.save(existingEmployee)).thenReturn(updatedEmployee);
 
-	    // Assert the result
-	    assertEquals(updatedEmployee, result);
+		Employee result = employeeService.updateEmployee(1, updatedEmployeeDTO);
 
-	    // Verify method calls
-	    verify(iemployeeDao, times(1)).findById(1);
-	    verify(iemployeeDao, times(1)).save(existingEmployee);
+		assertEquals(updatedEmployee, result);
+
+		verify(iemployeeDao, times(1)).findById(1);
+		verify(iemployeeDao, times(1)).save(existingEmployee);
 	}
-	
-	
-	
+
 	@Test
 	public void testUpdateEmployee_NotFound() {
 		Integer idToUpdate = 2;
-		EmployeeDTO updatedEmployee = new EmployeeDTO(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com", 6000,
-				new Department(2));
+		EmployeeDTO updatedEmployee = new EmployeeDTO(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com",
+				6000, new Department(2));
 
-		// Mock the behavior of employeeDao.findById() to return an empty Optional
 		when(iemployeeDao.findById(idToUpdate)).thenReturn(Optional.empty());
 
-		// Call the updateEmployee method and expect a NotFoundException
 		assertThrows(NotFoundException.class, () -> {
 			employeeService.updateEmployee(idToUpdate, updatedEmployee);
 		});
@@ -320,34 +240,5 @@ public class EmployeeServiceTest {
 
 		verify(iemployeeDao, times(1)).findById(idToSearch);
 	}
-
-	
-	 @Test
-	    public void testAddEmployeeException() {
-	        EmployeeDTO employeeDTO = new EmployeeDTO();
-
-	        
-	        when(iemployeeDao.save(any(Employee.class))).thenThrow(new RuntimeException("Database error"));
-
-	        ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
-
-	        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-	        assertEquals("Database error", response.getBody());
-	        
-	    }
-	
-	@Test
-	public void testFindByNameInternalServerError() {
-	    String nameToSearch = "Ali";
-
-	    when(iemployeeDao.findByName(nameToSearch)).thenThrow(new RuntimeException("Database error"));
-
-	    ResponseEntity<List<Employee>> response = employeeService.findByName(nameToSearch);
-
-	    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-	    assertNotNull(response.getBody());
-	    assertEquals(0, response.getBody().size());
-	}
-
 
 }

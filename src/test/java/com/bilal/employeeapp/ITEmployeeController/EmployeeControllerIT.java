@@ -69,7 +69,7 @@ public class EmployeeControllerIT {
 
 	@Test
 	public void testUpdateEmployeeDTO() {
-		// Create and add an employee to the database using EmployeeDTO
+
 		EmployeeDTO employeeDTO = new EmployeeDTO();
 		employeeDTO.setEname("Hassan");
 
@@ -85,7 +85,6 @@ public class EmployeeControllerIT {
 		restTemplate.exchange("/api/v1/employee/employee/update/{id}", HttpMethod.PUT,
 				new HttpEntity<>(updatingEmployeeDTO), EmployeeDTO.class, updatingEmployeeDTO.getEid());
 
-		// Get the updated employee from the database
 		ResponseEntity<Employee> updatedEmployeeDTO = employeeService.getEmployeeById(updatingEmployeeDTO.getEid());
 
 		assertNotNull(updatedEmployeeDTO);
@@ -140,7 +139,7 @@ public class EmployeeControllerIT {
 
 	@Test
 	public void testSearchByEmployeeNameDTO() {
-		// Create and add employees to the database using EmployeeDTO
+
 		EmployeeDTO employeeDTO1 = new EmployeeDTO();
 		employeeDTO1.setEname("Hassan");
 		EmployeeDTO employeeDTO2 = new EmployeeDTO();
