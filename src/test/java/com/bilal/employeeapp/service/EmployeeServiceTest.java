@@ -324,9 +324,9 @@ public class EmployeeServiceTest {
 	
 	 @Test
 	    public void testAddEmployeeException() {
-	        EmployeeDTO employeeDTO = new EmployeeDTO(); // Initialize with appropriate data
+	        EmployeeDTO employeeDTO = new EmployeeDTO();
 
-	        Employee employee = new Employee(); // Create a specific instance of Employee
+	        
 	        when(iemployeeDao.save(any(Employee.class))).thenThrow(new RuntimeException("Database error"));
 
 	        ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);

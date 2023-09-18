@@ -43,28 +43,28 @@ public class EmployeeService {
 	    employee.setEmail(employeeDTO.getEmail());
 	    employee.setEsalary(employeeDTO.getEsalary());
 	    
-	    // Assuming you have a Department constructor that accepts an ID
 	   
 	    return employee;
 	}
 	
 
 	public ResponseEntity<String> addEmployee(EmployeeDTO employeeDTO) {
-	    try {
-	        // Convert EmployeeDTO to Employee
-	        Employee employee = convertToEmployee(employeeDTO);
+		try {
+		    // Convert EmployeeDTO to Employee
+		    Employee employee = convertToEmployee(employeeDTO);
+		    // Save the employee
+		    Employee savedEmployee = employeeDao.save(employee);
 
-	        // Save the employee
-	        Employee savedEmployee = employeeDao.save(employee);
+		    if (savedEmployee == null) {
+		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Employee added fail");
+		    }
 
-	        if (savedEmployee != null) {
-	            return ResponseEntity.status(HttpStatus.CREATED).body("Employee added successfully");
-	        } else {
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Employee added fail");
-	        }
-	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-	    }
+		    return ResponseEntity.status(HttpStatus.CREATED).body("Employee added successfully");
+		} catch (Exception e) {
+		    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+		
+		
 	}
 	
 
@@ -119,14 +119,12 @@ public class EmployeeService {
 
 			if (employeeList != null) {
 				return new ResponseEntity<>(employeeList, HttpStatus.OK);
-			} else {
-				return new ResponseEntity<>(new ArrayList<>(), HttpStatus.NOT_FOUND);
+			}  else {
+			    return new ResponseEntity<>(new ArrayList<>(), HttpStatus.NOT_FOUND);
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+			} catch (Exception e) {
+			    return new ResponseEntity<>(new ArrayList<>(), HttpStatus.INTERNAL_SERVER_ERROR);
+			}
 
 	}
 

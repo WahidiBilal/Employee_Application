@@ -11,9 +11,6 @@ public class EmployeeDTO {
     private String email;
     private Integer esalary;
    
-    private Department edepartment;
-    // Constructors, getters, and setters
-
     public EmployeeDTO() {
     }
     
@@ -37,7 +34,6 @@ public class EmployeeDTO {
         this.eage = eage;
         this.email = email;
         this.esalary = esalary;
-        this.edepartment = edepartment;
     }
     
     public EmployeeDTO(String ename, Date edob, Integer eage, String email, Integer esalary, Department edepartment) {
@@ -47,7 +43,6 @@ public class EmployeeDTO {
 		this.eage = eage;
 		this.email = email;
 		this.esalary = esalary;
-		this.edepartment = edepartment;
 	}
 
 
