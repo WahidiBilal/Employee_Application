@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bilal.employeeapp.model.Employee;
+import com.bilal.employeeapp.model.EmployeeDTO;
 import com.bilal.employeeapp.service.EmployeeService;
 
 @RestController
@@ -39,18 +40,26 @@ public class EmployeeController {
         return employeeService.findByName(name);
     }
 	
-	@PostMapping("/employee/add")
-	public ResponseEntity<String> addEmployee(@RequestBody Employee employee) {
-		return employeeService.addEmployee(employee);
+
 	
-	}
-	
+    @PostMapping("/employee/add")
+    public ResponseEntity<String> addEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        // Then, pass the Employee object to the service layer for processing
+         return employeeService.addEmployee(employeeDTO);
+
+         
+    }
+
+
 	@PutMapping("/employee/update/{id}")
-	public void updateEmployee(@PathVariable Integer id, @RequestBody Employee employee) {
-		 employeeService.updateEmployee(id, employee);
-		
-		
-	}
+    public Employee updateEmployee(@PathVariable Integer id, @RequestBody EmployeeDTO employeeDTO) {
+        
+        // Pass the Employee object and ID to the service layer for updating
+       return employeeService.updateEmployee(id, employeeDTO);
+
+       
+    }
+	
 	
 	@DeleteMapping("/employee/delete/{id}")
 	public ResponseEntity<String> deleteEmployee(@PathVariable Integer id) {

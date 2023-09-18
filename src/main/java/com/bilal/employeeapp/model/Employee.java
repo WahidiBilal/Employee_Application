@@ -42,6 +42,19 @@ public class Employee {
 	}
 	
 	
+	
+	// Employee class constructor
+	public Employee(EmployeeDTO employeeDTO) {
+	 this.ename = employeeDTO.getEname();
+	 this.edob = employeeDTO.getEdob();
+	 this.eage = employeeDTO.getEage();
+	 this.email = employeeDTO.getEmail();
+	 this.esalary = employeeDTO.getEsalary();
+	    
+	    
+	}
+
+	
 
 	public Employee(Integer eid, String ename, Date edob, Integer eage, String email, Integer esalary,
 			Department edepartment) {

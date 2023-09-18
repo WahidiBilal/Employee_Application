@@ -12,4 +12,6 @@ public interface IEmployeeDao extends JpaRepository<Employee,Integer> {
 	@Query("SELECT e FROM Employee e WHERE e.ename LIKE %?1%")
 	List<Employee> findByName(String name);
 
+
+
 }
