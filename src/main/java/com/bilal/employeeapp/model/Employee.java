@@ -32,7 +32,7 @@ public class Employee {
 	private Integer esalary;
 	
 	
-	@ManyToOne(fetch = FetchType.EAGER )
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "did")
 	private Department edepartment;
 	

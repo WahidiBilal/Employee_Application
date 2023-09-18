@@ -22,8 +22,7 @@ public class EmployeeService {
 		
 		List<Employee> employeeList ;
 		
-		try {
-			
+		
 			employeeList = employeeDao.findAll();
 			
 			if(employeeList != null) {
@@ -31,13 +30,10 @@ public class EmployeeService {
 			}else {
 				return new ResponseEntity<>(new ArrayList<>(),HttpStatus.NOT_FOUND);
 			}
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(new ArrayList<>(),HttpStatus.INTERNAL_SERVER_ERROR);
-		}
 		
 	}
+		
+		
 	
 	public ResponseEntity<String> addEmployee(Employee employee) {
 		

@@ -7,7 +7,7 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		plugin = {"pretty", "json:target/cucuber.json"},
+		plugin = {"pretty", "json:target/cucumber.json"},
 		features = {"src/test/resources"},
 		glue = {"com.bilal.employeeapp.e2e"}
 		)

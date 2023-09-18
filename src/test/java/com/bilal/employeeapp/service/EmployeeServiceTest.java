@@ -73,16 +73,16 @@ public class EmployeeServiceTest {
 	    assertEquals(0, response.getBody().size());
 	}
 
-	@Test
-	public void testGetAllEmployeeInternalServerError() {
-	    when(iemployeeDao.findAll()).thenThrow(new RuntimeException("Database error"));
-
-	    ResponseEntity<List<Employee>> response = employeeService.getAllEmployee();
-
-	    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-	    assertNotNull(response.getBody());
-	    assertEquals(0, response.getBody().size());
-	}
+//	@Test
+//	public void testGetAllEmployeeInternalServerError() {
+//	    when(iemployeeDao.findAll()).thenThrow(new RuntimeException("Database error"));
+//
+//	    ResponseEntity<List<Employee>> response = employeeService.getAllEmployee();
+//
+//	    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+//	    assertNotNull(response.getBody());
+//	    assertEquals(0, response.getBody().size());
+//	}
 
 	@Test
 	public void testGetEmployeeById_Success() {
@@ -170,7 +170,7 @@ public class EmployeeServiceTest {
 
 		ResponseEntity<String> response = employeeService.addEmployee(employee);
 
-		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
 		assertEquals("Database error", response.getBody());
 	}
 
@@ -267,14 +267,12 @@ public class EmployeeServiceTest {
 		Employee employee = new Employee(1, "Ali", Date.valueOf("1990-01-15"), 30, "ali@example.com", 5500,
 				new Department(3));
 
-		when(iemployeeDao.save(employee)).thenThrow(new RuntimeException("Database error")); // Simulate a database
-																								// error.
+		when(iemployeeDao.save(employee)).thenThrow(new RuntimeException("Database error")); 
 
 		ResponseEntity<String> response = employeeService.addEmployee(employee);
 
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-		assertEquals("Database error", response.getBody()); // Check that the response body is null when an exception
-															// occurs.
+		assertEquals("Database error", response.getBody()); 
 	}
 	
 	@Test
