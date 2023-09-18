@@ -34,7 +34,7 @@
 <p>The REST API provides the following endpoints:</p>
 
 <ul>
-  <li><strong>GET localhost:8081/api/v1/employee/employees/strong>: Retrieves a list of all contacts.</li> 
+  <li><strong>GET localhost:8081/api/v1/employee/employees/</strong>>: Retrieves a list of all contacts.</li> 
   <li><strong>GET localhost:8081/api/v1/employee/employee/{id}</strong>: Retrieves a specific employee by ID.</li>
   <li><strong>POST localhost:8081/api/v1/employee/employee/add</strong>: Creates a new employee.</li>
   <li><strong>GET localhost:8081/api/v1/employee/employees/search</strong>: Search employee by Name.</li>  
