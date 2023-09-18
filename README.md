@@ -5,9 +5,16 @@
 
 | Badge                                                     | URL                                                                                           |
 |-----------------------------------------------------------|-----------------------------------------------------------------------------------------------|
-| Sonarcloud Quality                                       | [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=WahidiBilal_Employee_Application&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=WahidiBilal_Employee_Application) |
-| SonarCloud Quality Gates                    | [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=WahidiBilal_Employee_Application)](https://sonarcloud.io/summary/new_code?id=WahidiBilal_Employee_Application) |
-| Coverage Status                                          | <a href='https://coveralls.io/github/WahidiBilal/Employee_Application'><img src='https://coveralls.io/repos/github/WahidiBilal/Employee_Application/badge.svg' alt='Coverage Status' /></a> |
+| Sonarcloud Quality                                        | [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=WahidiBilal_Employee_Application&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=WahidiBilal_Employee_Application) |
+| SonarCloud Quality Gates                                  | [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=WahidiBilal_Employee_Application)](https://sonarcloud.io/summary/new_code?id=WahidiBilal_Employee_Application) |
+| Reliability Rating                                        | [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=WahidiBilal_Employee_Application&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=WahidiBilal_Employee_Application) |
+| Duplicated Lines (%)                                      | [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=WahidiBilal_Employee_Application&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=WahidiBilal_Employee_Application) |
+| Vulnerabilities                                           | [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=WahidiBilal_Employee_Application&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=WahidiBilal_Employee_Application) |
+| Bugs                                                      | [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=WahidiBilal_Employee_Application&metric=bugs)](https://sonarcloud.io/summary/new_code?id=WahidiBilal_Employee_Application) |
+| Security Rating                                           | [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=WahidiBilal_Employee_Application&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=WahidiBilal_Employee_Application) |
+| Maintainability Rating                                    | [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=WahidiBilal_Employee_Application&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=WahidiBilal_Employee_Application) |
+| Code Smells                                               |[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=WahidiBilal_Employee_Application&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=WahidiBilal_Employee_Application) |
+| Coverage Status                                           | <a href='https://coveralls.io/github/WahidiBilal/Employee_Application'><img src='https://coveralls.io/repos/github/WahidiBilal/Employee_Application/badge.svg' alt='Coverage Status' /></a> |
 
 <h2>Getting Started</h2>
 
