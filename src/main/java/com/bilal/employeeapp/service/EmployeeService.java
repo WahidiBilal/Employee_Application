@@ -34,6 +34,7 @@ public class EmployeeService {
 
 	private Employee convertToEmployee(EmployeeDTO employeeDTO) {
 		Employee employee = new Employee();
+		employee.setEid(employeeDTO.getEid());
 		employee.setEname(employeeDTO.getEname());
 		employee.setEdob(employeeDTO.getEdob());
 		employee.setEage(employeeDTO.getEage());
@@ -48,7 +49,9 @@ public class EmployeeService {
 	    Employee employee = convertToEmployee(employeeDTO);
 	    Employee savedEmployee = employeeDao.save(employee);
 	    
-	    boolean isEmployeeSaved = savedEmployee != null;
+	   // boolean isEmployeeSaved = savedEmployee != null;
+	    boolean isEmployeeSaved = (savedEmployee != null && savedEmployee.getEid() != null); // Check if the ID is set.
+
 	    
 	    HttpStatus status;
 	    String message;
@@ -66,7 +69,7 @@ public class EmployeeService {
 
 
 	public Employee updateEmployee(Integer id, EmployeeDTO employeeDTO) {
-
+		
 		Employee existingEmployee = employeeDao.findById(id).orElse(null);
 
 		if (existingEmployee == null) {

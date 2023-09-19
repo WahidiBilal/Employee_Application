@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -137,19 +138,42 @@ public class EmployeeServiceTest {
 		assertEquals(0, response.getBody().size());
 	}
 
+//	@Test
+//	public void testAddEmployeeSuccess() {
+//
+//		EmployeeDTO employeeDTO = new EmployeeDTO();
+//
+//		Employee savedEmployee = new Employee();
+//		when(iemployeeDao.save(any(Employee.class))).thenReturn(savedEmployee);
+//
+//		ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
+//
+//		assertEquals(HttpStatus.CREATED, response.getStatusCode());
+//		assertEquals("Employee added successfully", response.getBody());
+//
+//	}
+
 	@Test
 	public void testAddEmployeeSuccess() {
 
+		IEmployeeDao employeeDao = mock(IEmployeeDao.class);
+		EmployeeService employeeService = new EmployeeService();
+		employeeService.employeeDao = employeeDao;
+
 		EmployeeDTO employeeDTO = new EmployeeDTO();
+		employeeDTO.setEname("John");
 
 		Employee savedEmployee = new Employee();
-		when(iemployeeDao.save(any(Employee.class))).thenReturn(savedEmployee);
+		savedEmployee.setEid(1);
+
+		when(employeeDao.save(any(Employee.class))).thenReturn(savedEmployee);
 
 		ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
 
+		verify(employeeDao).save(any(Employee.class));
+
 		assertEquals(HttpStatus.CREATED, response.getStatusCode());
 		assertEquals("Employee added successfully", response.getBody());
-
 	}
 
 	@Test
@@ -158,7 +182,7 @@ public class EmployeeServiceTest {
 		EmployeeDTO employeeDTO = new EmployeeDTO();
 
 		when(employeeService.addEmployee(employeeDTO))
-		.thenReturn(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Employee added fail"));
+				.thenReturn(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Employee added fail"));
 
 		ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
 

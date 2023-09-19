@@ -45,6 +45,7 @@ public class Employee {
 	
 	// Employee class constructor
 	public Employee(EmployeeDTO employeeDTO) {
+	 this.eid = employeeDTO.getEid();	
 	 this.ename = employeeDTO.getEname();
 	 this.edob = employeeDTO.getEdob();
 	 this.eage = employeeDTO.getEage();
@@ -53,6 +54,7 @@ public class Employee {
 	    
 	    
 	}
+   
 
 	
 

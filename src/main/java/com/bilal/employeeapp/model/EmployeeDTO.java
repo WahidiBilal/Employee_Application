@@ -17,6 +17,7 @@ public class EmployeeDTO {
     
  // Employee class constructor
  	public EmployeeDTO(EmployeeDTO employeeDTO) {
+ 	 this.eid = employeeDTO.getEid();	
  	 this.ename = employeeDTO.getEname();
  	 this.edob = employeeDTO.getEdob();
  	 this.eage = employeeDTO.getEage();
@@ -25,6 +26,8 @@ public class EmployeeDTO {
  	    
  	    
  	}
+ 	
+ 	
 
 
     public EmployeeDTO(Integer eid, String ename, Date edob, Integer eage, String email, Integer esalary, Department edepartment) {
