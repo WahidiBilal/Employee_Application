@@ -49,8 +49,8 @@ public class EmployeeService {
 	    Employee employee = convertToEmployee(employeeDTO);
 	    Employee savedEmployee = employeeDao.save(employee);
 	    
-	   // boolean isEmployeeSaved = savedEmployee != null;
-	    boolean isEmployeeSaved = (savedEmployee != null && savedEmployee.getEid() != null); // Check if the ID is set.
+	   
+	    boolean isEmployeeSaved = (savedEmployee != null && savedEmployee.getEid() != null); 
 
 	    
 	    HttpStatus status;

@@ -138,21 +138,6 @@ public class EmployeeServiceTest {
 		assertEquals(0, response.getBody().size());
 	}
 
-//	@Test
-//	public void testAddEmployeeSuccess() {
-//
-//		EmployeeDTO employeeDTO = new EmployeeDTO();
-//
-//		Employee savedEmployee = new Employee();
-//		when(iemployeeDao.save(any(Employee.class))).thenReturn(savedEmployee);
-//
-//		ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
-//
-//		assertEquals(HttpStatus.CREATED, response.getStatusCode());
-//		assertEquals("Employee added successfully", response.getBody());
-//
-//	}
-
 	@Test
 	public void testAddEmployeeSuccess() {
 
