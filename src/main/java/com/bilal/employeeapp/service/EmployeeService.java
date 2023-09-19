@@ -42,20 +42,28 @@ public class EmployeeService {
 
 		return employee;
 	}
-
+	
+	
 	public ResponseEntity<String> addEmployee(EmployeeDTO employeeDTO) {
-
-		Employee employee = convertToEmployee(employeeDTO);
-
-		Employee savedEmployee = employeeDao.save(employee);
-
-		if (savedEmployee == null) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Employee added fail");
-		} else {
-			return ResponseEntity.status(HttpStatus.CREATED).body("Employee added successfully");
-
-		}
+	    Employee employee = convertToEmployee(employeeDTO);
+	    Employee savedEmployee = employeeDao.save(employee);
+	    
+	    boolean isEmployeeSaved = savedEmployee != null;
+	    
+	    HttpStatus status;
+	    String message;
+	    
+	    if (isEmployeeSaved) {
+	        status = HttpStatus.CREATED;
+	        message = "Employee added successfully";
+	    } else {
+	        status = HttpStatus.INTERNAL_SERVER_ERROR;
+	        message = "Employee added fail";
+	    }
+	    
+	    return ResponseEntity.status(status).body(message);
 	}
+
 
 	public Employee updateEmployee(Integer id, EmployeeDTO employeeDTO) {
 
@@ -86,15 +94,16 @@ public class EmployeeService {
 	}
 
 	public ResponseEntity<Employee> getEmployeeById(Integer id) {
-
-		Employee employee = employeeDao.findById(id).orElse(null);
-
-		if (employee == null) {
-			return new ResponseEntity<Employee>(employee, HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<Employee>(employee, HttpStatus.OK);
-		}
-
+	    Employee employee = employeeDao.findById(id).orElse(null);
+	    HttpStatus status;
+	    
+	    if (employee == null) {
+	        status = HttpStatus.NOT_FOUND;
+	    } else {
+	        status = HttpStatus.OK;
+	    }
+	    
+	    return ResponseEntity.status(status).body(employee);
 	}
 
 	public ResponseEntity<List<Employee>> findByName(String name) {

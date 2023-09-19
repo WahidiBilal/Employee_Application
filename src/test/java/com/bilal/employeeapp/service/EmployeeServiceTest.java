@@ -158,7 +158,7 @@ public class EmployeeServiceTest {
 		EmployeeDTO employeeDTO = new EmployeeDTO();
 
 		when(employeeService.addEmployee(employeeDTO))
-				.thenReturn(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Employee added fail"));
+		.thenReturn(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Employee added fail"));
 
 		ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
 
