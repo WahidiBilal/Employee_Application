@@ -2,8 +2,6 @@ package com.bilal.employeeapp.model;
 
 import java.sql.Date;
 
-import com.bilal.employeeapp.model.Department;
-
 public class EmployeeDTO {
 
     private Integer eid;
