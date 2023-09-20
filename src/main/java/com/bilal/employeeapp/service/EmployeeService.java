@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 import com.bilal.employeeapp.dao.IEmployeeDao;
 import com.bilal.employeeapp.exceptions.NotFoundException;
 import com.bilal.employeeapp.model.Employee;
-import com.bilal.employeedto.dto.EmployeeDTO;
-
+import com.bilal.employeeapp.model.EmployeeDTO;
 
 @Service
 public class EmployeeService {
@@ -44,22 +43,19 @@ public class EmployeeService {
 
 		return employee;
 	}
-	
-	
-	
-	public ResponseEntity<String> addEmployee(EmployeeDTO employeeDTO) {
-	    Employee savedEmployee = employeeDao.save(convertToEmployee(employeeDTO));
 
-	    if (savedEmployee != null && savedEmployee.getEid() > 0) {
-	        return ResponseEntity.status(HttpStatus.CREATED).body("Employee added successfully");
-	    } else {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Employee added fail");
-	    }
+	public ResponseEntity<String> addEmployee(EmployeeDTO employeeDTO) {
+		Employee savedEmployee = employeeDao.save(convertToEmployee(employeeDTO));
+
+		if (savedEmployee != null && savedEmployee.getEid() > 0) {
+			return ResponseEntity.status(HttpStatus.CREATED).body("Employee added successfully");
+		} else {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Employee added fail");
+		}
 	}
 
-
 	public Employee updateEmployee(Integer id, EmployeeDTO employeeDTO) {
-		
+
 		Employee existingEmployee = employeeDao.findById(id).orElse(null);
 
 		if (existingEmployee == null) {
@@ -87,16 +83,16 @@ public class EmployeeService {
 	}
 
 	public ResponseEntity<Employee> getEmployeeById(Integer id) {
-	    Employee employee = employeeDao.findById(id).orElse(null);
-	    HttpStatus status;
-	    
-	    if (employee == null) {
-	        status = HttpStatus.NOT_FOUND;
-	    } else {
-	        status = HttpStatus.OK;
-	    }
-	    
-	    return ResponseEntity.status(status).body(employee);
+		Employee employee = employeeDao.findById(id).orElse(null);
+		HttpStatus status;
+
+		if (employee == null) {
+			status = HttpStatus.NOT_FOUND;
+		} else {
+			status = HttpStatus.OK;
+		}
+
+		return ResponseEntity.status(status).body(employee);
 	}
 
 	public ResponseEntity<List<Employee>> findByName(String name) {

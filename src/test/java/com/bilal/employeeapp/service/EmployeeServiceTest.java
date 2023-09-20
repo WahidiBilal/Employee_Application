@@ -29,7 +29,7 @@ import com.bilal.employeeapp.dao.IEmployeeDao;
 import com.bilal.employeeapp.exceptions.NotFoundException;
 import com.bilal.employeeapp.model.Department;
 import com.bilal.employeeapp.model.Employee;
-import com.bilal.employeedto.dto.EmployeeDTO;
+import com.bilal.employeeapp.model.EmployeeDTO;
 
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class EmployeeServiceTest {

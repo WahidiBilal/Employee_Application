@@ -2,9 +2,8 @@ package com.bilal.employeeapp.ITEmployeeController;
 
 import com.bilal.employeeapp.EmployeeManagementApplication;
 import com.bilal.employeeapp.model.Employee;
+import com.bilal.employeeapp.model.EmployeeDTO;
 import com.bilal.employeeapp.service.EmployeeService;
-import com.bilal.employeedto.dto.EmployeeDTO;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

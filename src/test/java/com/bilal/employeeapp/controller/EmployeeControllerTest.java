@@ -18,8 +18,8 @@ import org.springframework.http.ResponseEntity;
 
 import com.bilal.employeeapp.model.Department;
 import com.bilal.employeeapp.model.Employee;
+import com.bilal.employeeapp.model.EmployeeDTO;
 import com.bilal.employeeapp.service.EmployeeService;
-import com.bilal.employeedto.dto.EmployeeDTO;
 
 public class EmployeeControllerTest {
 

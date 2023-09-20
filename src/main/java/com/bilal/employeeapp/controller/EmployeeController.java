@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bilal.employeeapp.model.Employee;
+import com.bilal.employeeapp.model.EmployeeDTO;
 import com.bilal.employeeapp.service.EmployeeService;
-import com.bilal.employeedto.dto.EmployeeDTO;
 
 @RestController
 @RequestMapping("api/v1/employee")

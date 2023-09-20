@@ -1,4 +1,4 @@
-package com.bilal.employeedto.dto;
+package com.bilal.employeeapp.model;
 
 import java.sql.Date;
 
@@ -29,8 +29,6 @@ public class EmployeeDTO {
  	    
  	}
  	
- 	
-
 
     public EmployeeDTO(Integer eid, String ename, Date edob, Integer eage, String email, Integer esalary, Department edepartment) {
         this.eid = eid;
