@@ -18,8 +18,8 @@ import org.springframework.http.ResponseEntity;
 
 import com.bilal.employeeapp.model.Department;
 import com.bilal.employeeapp.model.Employee;
-import com.bilal.employeeapp.model.EmployeeDTO;
 import com.bilal.employeeapp.service.EmployeeService;
+import com.bilal.employeedto.dto.EmployeeDTO;
 
 public class EmployeeControllerTest {
 
@@ -101,7 +101,7 @@ public class EmployeeControllerTest {
 	public void testAddEmployee() {
 
 		EmployeeDTO employee = new EmployeeDTO(2, "Obaid", Date.valueOf("1995-01-01"), 30, "Obaid@gmail.com", 5000,
-				new Department(1));
+		new Department(1));
 
 		when(employeeService.addEmployee(employee)).thenReturn(ResponseEntity.ok("success"));
 

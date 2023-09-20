@@ -1,6 +1,8 @@
-package com.bilal.employeeapp.model;
+package com.bilal.employeedto.dto;
 
 import java.sql.Date;
+
+import com.bilal.employeeapp.model.Department;
 
 public class EmployeeDTO {
 

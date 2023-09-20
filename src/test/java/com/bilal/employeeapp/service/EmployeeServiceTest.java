@@ -29,7 +29,7 @@ import com.bilal.employeeapp.dao.IEmployeeDao;
 import com.bilal.employeeapp.exceptions.NotFoundException;
 import com.bilal.employeeapp.model.Department;
 import com.bilal.employeeapp.model.Employee;
-import com.bilal.employeeapp.model.EmployeeDTO;
+import com.bilal.employeedto.dto.EmployeeDTO;
 
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class EmployeeServiceTest {
@@ -138,63 +138,35 @@ public class EmployeeServiceTest {
 	}
 
 
-	 @Test
-	    public void testAddEmployeeSuccess() {
-	        EmployeeDTO employeeDTO = new EmployeeDTO(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com", 6000,
-					new Department(2));
-	        Employee savedEmployee = new Employee(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com", 6000,
-					new Department(2));
-	        savedEmployee.setEid(1); 
 
-	        when(iemployeeDao.save(any(Employee.class))).thenReturn(savedEmployee);
+	@Test
+	public void testAddEmployeeSuccess() {
+		EmployeeDTO employeeDTO = new EmployeeDTO();
+		Employee savedEmployee = new Employee();
+		savedEmployee.setEid(1); 
+		when(iemployeeDao.save(any(Employee.class))).thenReturn(savedEmployee);
 
-	        ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
+		ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
 
-	        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-	        assertEquals("Employee added successfully", response.getBody());
-	    }
-	 
-	 @Test
-	    public void testAddEmployeeFail() {
-	        EmployeeDTO employeeDTO = new EmployeeDTO(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com", 6000,
-					new Department(2));
-
-	        when(iemployeeDao.save(any(Employee.class))).thenReturn(null);
-
-	        ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
-
-	        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-	        assertEquals("Employee added fail", response.getBody());
-	    }
-    
-	 @Test
-	    public void testAddEmployeeException() {
-	        EmployeeDTO employeeDTO = new EmployeeDTO(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com", 6000,
-					new Department(2));
-
-	        when(iemployeeDao.save(any(Employee.class))).thenThrow(new RuntimeException("Test Exception"));
-
-	        ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
-
-	        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-	        assertEquals("Error: Test Exception", response.getBody());
-	    }
-
-
+		assertEquals(HttpStatus.CREATED, response.getStatusCode());
+		assertEquals("Employee added successfully", response.getBody());
+	}
 
 	@Test
 	public void testAddEmployeeFailure() {
-
 		EmployeeDTO employeeDTO = new EmployeeDTO();
-
-		when(employeeService.addEmployee(employeeDTO))
-				.thenReturn(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Employee added fail"));
+		
+		when(iemployeeDao.save(any(Employee.class))).thenReturn(null);
 
 		ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
 
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
 		assertEquals("Employee added fail", response.getBody());
 	}
+
+
+
+
 
 	@Test
 	public void testUpdateEmployeeSuccess() {

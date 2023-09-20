@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 import com.bilal.employeeapp.dao.IEmployeeDao;
 import com.bilal.employeeapp.exceptions.NotFoundException;
 import com.bilal.employeeapp.model.Employee;
-import com.bilal.employeeapp.model.EmployeeDTO;
+import com.bilal.employeedto.dto.EmployeeDTO;
+
 
 @Service
 public class EmployeeService {
@@ -45,21 +46,14 @@ public class EmployeeService {
 	}
 	
 	
-		
+	
 	public ResponseEntity<String> addEmployee(EmployeeDTO employeeDTO) {
-	    try {
-	        Employee saveEmployee = employeeDao.save(convertToEmployee(employeeDTO));
+	    Employee savedEmployee = employeeDao.save(convertToEmployee(employeeDTO));
 
-	        if (saveEmployee!=null && saveEmployee.getEid()>0) {
-	        	return ResponseEntity.status(HttpStatus.CREATED).body("Employee added successfully");
-	        }else {
-	        	
-	        	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Employee added fail");
-	        }
-	        
-	        
-	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+	    if (savedEmployee != null && savedEmployee.getEid() > 0) {
+	        return ResponseEntity.status(HttpStatus.CREATED).body("Employee added successfully");
+	    } else {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Employee added fail");
 	    }
 	}
 
