@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -138,28 +137,50 @@ public class EmployeeServiceTest {
 		assertEquals(0, response.getBody().size());
 	}
 
-	@Test
-	public void testAddEmployeeSuccess() {
 
-		IEmployeeDao employeeDao = mock(IEmployeeDao.class);
-		EmployeeService employeeService = new EmployeeService();
-		employeeService.employeeDao = employeeDao;
+	 @Test
+	    public void testAddEmployeeSuccess() {
+	        EmployeeDTO employeeDTO = new EmployeeDTO(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com", 6000,
+					new Department(2));
+	        Employee savedEmployee = new Employee(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com", 6000,
+					new Department(2));
+	        savedEmployee.setEid(1); 
 
-		EmployeeDTO employeeDTO = new EmployeeDTO();
-		employeeDTO.setEname("John");
+	        when(iemployeeDao.save(any(Employee.class))).thenReturn(savedEmployee);
 
-		Employee savedEmployee = new Employee();
-		savedEmployee.setEid(1);
+	        ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
 
-		when(employeeDao.save(any(Employee.class))).thenReturn(savedEmployee);
+	        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+	        assertEquals("Employee added successfully", response.getBody());
+	    }
+	 
+	 @Test
+	    public void testAddEmployeeFail() {
+	        EmployeeDTO employeeDTO = new EmployeeDTO(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com", 6000,
+					new Department(2));
 
-		ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
+	        when(iemployeeDao.save(any(Employee.class))).thenReturn(null);
 
-		verify(employeeDao).save(any(Employee.class));
+	        ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
 
-		assertEquals(HttpStatus.CREATED, response.getStatusCode());
-		assertEquals("Employee added successfully", response.getBody());
-	}
+	        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+	        assertEquals("Employee added fail", response.getBody());
+	    }
+    
+	 @Test
+	    public void testAddEmployeeException() {
+	        EmployeeDTO employeeDTO = new EmployeeDTO(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com", 6000,
+					new Department(2));
+
+	        when(iemployeeDao.save(any(Employee.class))).thenThrow(new RuntimeException("Test Exception"));
+
+	        ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
+
+	        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+	        assertEquals("Error: Test Exception", response.getBody());
+	    }
+
+
 
 	@Test
 	public void testAddEmployeeFailure() {

@@ -45,26 +45,22 @@ public class EmployeeService {
 	}
 	
 	
+		
 	public ResponseEntity<String> addEmployee(EmployeeDTO employeeDTO) {
-	    Employee employee = convertToEmployee(employeeDTO);
-	    Employee savedEmployee = employeeDao.save(employee);
-	    
-	   
-	    boolean isEmployeeSaved = (savedEmployee != null && savedEmployee.getEid() != null); 
+	    try {
+	        Employee saveEmployee = employeeDao.save(convertToEmployee(employeeDTO));
 
-	    
-	    HttpStatus status;
-	    String message;
-	    
-	    if (isEmployeeSaved) {
-	        status = HttpStatus.CREATED;
-	        message = "Employee added successfully";
-	    } else {
-	        status = HttpStatus.INTERNAL_SERVER_ERROR;
-	        message = "Employee added fail";
+	        if (saveEmployee!=null && saveEmployee.getEid()>0) {
+	        	return ResponseEntity.status(HttpStatus.CREATED).body("Employee added successfully");
+	        }else {
+	        	
+	        	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Employee added fail");
+	        }
+	        
+	        
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
 	    }
-	    
-	    return ResponseEntity.status(status).body(message);
 	}
 
 
