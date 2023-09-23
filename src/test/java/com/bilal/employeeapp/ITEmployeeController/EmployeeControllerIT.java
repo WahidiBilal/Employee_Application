@@ -3,7 +3,6 @@ package com.bilal.employeeapp.ITEmployeeController;
 import com.bilal.employeeapp.EmployeeManagementApplication;
 import com.bilal.employeeapp.dto.DepartmentDTO;
 import com.bilal.employeeapp.dto.EmployeeDTO;
-import com.bilal.employeeapp.model.Department;
 import com.bilal.employeeapp.model.Employee;
 import com.bilal.employeeapp.service.EmployeeService;
 import org.junit.Test;
@@ -42,32 +41,6 @@ public class EmployeeControllerIT {
     private EmployeeService employeeService;
 
     
-
-//    @Test
-//    public void testAddEmployee() {
-//        EmployeeDTO employeeDTO = new EmployeeDTO();
-//        employeeDTO.setEname("Hassan");
-//        employeeDTO.setEage(25);
-//        employeeDTO.setEdob(Date.valueOf("1990-01-01"));
-//        employeeDTO.setEmail("hassan@gmail.com");
-//        employeeDTO.setEsalary(40000);
-//        employeeDTO.setEdepartment(new DepartmentDTO(2));
-//
-//        // Stub the behavior of the employeeService.addEmployee method
-//        when(employeeService.addEmployee(eq(employeeDTO)))
-//            .thenReturn(ResponseEntity.status(HttpStatus.CREATED).body("Employee added successfully"));
-//
-//        ResponseEntity<String> responseEntity = restTemplate.postForEntity("/employee/add", employeeDTO, String.class);
-//
-//        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-//        assertEquals("Employee added successfully", responseEntity.getBody());
-//
-//        // Verify that employeeService.addEmployee was called exactly once with the correct argument
-//        verify(employeeService, times(1)).addEmployee(eq(employeeDTO));
-//    }
-    
-    
-
     @Test
     public void testUpdateEmployee() {
         // Create and add an employee to the database
