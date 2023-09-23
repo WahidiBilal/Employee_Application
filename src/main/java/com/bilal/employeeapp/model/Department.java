@@ -9,8 +9,6 @@ import javax.persistence.Table;
 
 
 
-
-
 @Entity
 @Table
 public class Department {
@@ -74,4 +72,3 @@ public class Department {
 	
 
 }
-

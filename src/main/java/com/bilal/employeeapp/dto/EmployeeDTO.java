@@ -1,28 +1,10 @@
-package com.bilal.employeeapp.model;
+package com.bilal.employeeapp.dto;
 
 import java.sql.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-
-
-@Entity
-@Table
-public class Employee {
+public class EmployeeDTO {
     
-	@Id
 
-	@GeneratedValue(
-			strategy = GenerationType.IDENTITY
-				
-			)
 	
 	private Integer eid;
 	private String ename;
@@ -30,21 +12,16 @@ public class Employee {
 	private Integer eage; 
 	private String email;
 	private Integer esalary;
+	private DepartmentDTO edepartment;
 	
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "did")
-	private Department edepartment;
-	
-	public Employee () {
-		
+	public EmployeeDTO () {
 		
 	}
 	
 	
 
-	public Employee(Integer eid, String ename, Date edob, Integer eage, String email, Integer esalary,
-			Department edepartment) {
+	public EmployeeDTO(Integer eid, String ename, Date edob, Integer eage, String email, Integer esalary,
+			DepartmentDTO edepartment) {
 		this.eid = eid;
 		this.ename = ename;
 		this.edob = edob;
@@ -56,7 +33,7 @@ public class Employee {
 
 
 
-	public Employee(String ename, Date edob, Integer eage, String email, Integer esalary, Department edepartment) {
+	public EmployeeDTO(String ename, Date edob, Integer eage, String email, Integer esalary, DepartmentDTO edepartment) {
 		super();
 		this.ename = ename;
 		this.edob = edob;
@@ -114,11 +91,11 @@ public class Employee {
 		this.esalary = esalary;
 	}
 
-	public Department getEdepartment() {
+	public DepartmentDTO getEdepartment() {
 		return edepartment;
 	}
 
-	public void setEdepartment(Department edepartment) {
+	public void setEdepartment(DepartmentDTO edepartment) {
 		this.edepartment = edepartment;
 	}
 

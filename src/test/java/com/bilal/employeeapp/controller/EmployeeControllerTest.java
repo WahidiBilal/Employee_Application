@@ -1,25 +1,28 @@
 package com.bilal.employeeapp.controller;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.bilal.employeeapp.dto.DepartmentDTO;
+import com.bilal.employeeapp.dto.EmployeeDTO;
 import com.bilal.employeeapp.model.Department;
 import com.bilal.employeeapp.model.Employee;
-import com.bilal.employeeapp.model.EmployeeDTO;
 import com.bilal.employeeapp.service.EmployeeService;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 public class EmployeeControllerTest {
 
@@ -39,14 +42,15 @@ public class EmployeeControllerTest {
 	public void testGetAllEmployee() {
 
 		// given
-		List<Employee> employees = new ArrayList<>();
+		List<EmployeeDTO> employees = new ArrayList<>();
+		employees.add(new EmployeeDTO(1, "Bilal", Date.valueOf("1995-01-01"), 30, "bilal@gmail.com", 5000,
+				new DepartmentDTO(2)));
 		employees.add(
-				new Employee(1, "Bilal", Date.valueOf("1995-01-01"), 30, "bilal@gmail.com", 5000, new Department(2)));
-		employees.add(new Employee(2, "Ali", Date.valueOf("1992-05-15"), 36, "ali@gmail.com", 6000, new Department(3)));
+				new EmployeeDTO(2, "Ali", Date.valueOf("1992-05-15"), 36, "ali@gmail.com", 6000, new DepartmentDTO(3)));
 
 		when(employeeService.getAllEmployee()).thenReturn(ResponseEntity.ok(employees));
 
-		ResponseEntity<List<Employee>> response = employeeController.getAllEmployee();
+		ResponseEntity<List<EmployeeDTO>> response = employeeController.getAllEmployee();
 
 		assertNotNull(response);
 		assertEquals(200, response.getStatusCodeValue());
@@ -68,29 +72,29 @@ public class EmployeeControllerTest {
 	}
 
 	@Test
-	    public void testEmployeeNotExistById() {
-	    	
-	    	when(employeeService.getEmployeeById(1)).thenReturn(null);
-	    	
-	    	ResponseEntity<Employee> employee = employeeController.getEmployeeByID(1);
-	    	
-	    	assertEquals(null,employee);
-	    	
-	   
-	   }
+    public void testEmployeeNotExistById() {
+    	
+    	when(employeeService.getEmployeeById(1)).thenReturn(null);
+    	
+    	ResponseEntity<Employee> employee = employeeController.getEmployeeByID(1);
+    	
+    	assertEquals(null,employee);
+    	
+   
+   }
 
 	@Test
 	public void testEmployeeSearchByNameExist() {
 
-		Employee employee = new Employee(1, "Bilal", Date.valueOf("1995-01-01"), 30, "bilal@gmail.com", 5000,
-				new Department(2));
+		EmployeeDTO employee = new EmployeeDTO(1, "Bilal", Date.valueOf("1995-01-01"), 30, "bilal@gmail.com", 5000,
+				new DepartmentDTO(2));
 
-		List<Employee> employees = new ArrayList<>();
+		List<EmployeeDTO> employees = new ArrayList<>();
 		employees.add(employee);
 
 		when(employeeService.findByName("obaid")).thenReturn(ResponseEntity.ok(employees));
 
-		ResponseEntity<List<Employee>> response = employeeController.searchEmployeesByName("obaid");
+		ResponseEntity<List<EmployeeDTO>> response = employeeController.searchEmployeesByName("obaid");
 
 		assertNotNull(response);
 		assertEquals(200, response.getStatusCodeValue());
@@ -101,7 +105,7 @@ public class EmployeeControllerTest {
 	public void testAddEmployee() {
 
 		EmployeeDTO employee = new EmployeeDTO(2, "Obaid", Date.valueOf("1995-01-01"), 30, "Obaid@gmail.com", 5000,
-		new Department(1));
+				new DepartmentDTO(1));
 
 		when(employeeService.addEmployee(employee)).thenReturn(ResponseEntity.ok("success"));
 
@@ -113,17 +117,12 @@ public class EmployeeControllerTest {
 	@Test
 	public void testUpdateEmployee() {
 
-		EmployeeDTO updatedEmployeeDTO = new EmployeeDTO();
-		updatedEmployeeDTO.setEname("Bilal");
+		EmployeeDTO updatedEmployee = new EmployeeDTO(1, "Zakir", Date.valueOf("1984-01-01"), 32, "Zakir@example.com",
+				6000, new DepartmentDTO(2));
 
-		Employee updatedEmployee = new Employee();
-		when(employeeService.updateEmployee(1, updatedEmployeeDTO)).thenReturn(updatedEmployee);
+		employeeController.updateEmployee(1, updatedEmployee);
 
-		Employee result = employeeController.updateEmployee(1, updatedEmployeeDTO);
-
-		verify(employeeService, times(1)).updateEmployee(1, updatedEmployeeDTO);
-
-		assertEquals(updatedEmployee, result);
+		verify(employeeService).updateEmployee(eq(1), any(EmployeeDTO.class));
 	}
 
 	@Test

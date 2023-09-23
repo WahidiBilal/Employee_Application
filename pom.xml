@@ -21,12 +21,14 @@
 		<sonar.coverage.exclusions>
 			**/EmployeeManagementApplication.*,
 			**/entity/*.*,
-			**/model/*.*
+			**/model/*.*,
+			**/dto/*.*
 		</sonar.coverage.exclusions>
 		<sonar.exclusions>
 			**/EmployeeManagementApplication.*,
 			**/entity/*.*,
-			**/model/*.*
+			**/model/*.*,
+			**/dto/*.*
 		</sonar.exclusions>
 	</properties>
 	<dependencyManagement>
@@ -219,6 +221,7 @@
 						<exclude>**/EmployeeManagementApplication.*</exclude>
 						<exclude>**/entity/*.*</exclude>
 						<exclude>**/model/*.*</exclude>
+						<exclude>**/dto/*.*</exclude>
 					</excludes>
 				</configuration>
 				<executions>

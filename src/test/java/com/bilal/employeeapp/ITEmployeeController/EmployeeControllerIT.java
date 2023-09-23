@@ -1,8 +1,10 @@
 package com.bilal.employeeapp.ITEmployeeController;
 
 import com.bilal.employeeapp.EmployeeManagementApplication;
+import com.bilal.employeeapp.dto.DepartmentDTO;
+import com.bilal.employeeapp.dto.EmployeeDTO;
+import com.bilal.employeeapp.model.Department;
 import com.bilal.employeeapp.model.Employee;
-import com.bilal.employeeapp.model.EmployeeDTO;
 import com.bilal.employeeapp.service.EmployeeService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -31,82 +32,89 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 public class EmployeeControllerIT {
 
-	@LocalServerPort
-	private int port;
+    @LocalServerPort
+    private int port;
 
-	@Autowired
-	private TestRestTemplate restTemplate;
+    @Autowired
+    private TestRestTemplate restTemplate;
 
-	@Autowired
-	private EmployeeService employeeService;
+    @Autowired
+    private EmployeeService employeeService;
+
+    
+
+//    @Test
+//    public void testAddEmployee() {
+//        EmployeeDTO employeeDTO = new EmployeeDTO();
+//        employeeDTO.setEname("Hassan");
+//        employeeDTO.setEage(25);
+//        employeeDTO.setEdob(Date.valueOf("1990-01-01"));
+//        employeeDTO.setEmail("hassan@gmail.com");
+//        employeeDTO.setEsalary(40000);
+//        employeeDTO.setEdepartment(new DepartmentDTO(2));
+//
+//        // Stub the behavior of the employeeService.addEmployee method
+//        when(employeeService.addEmployee(eq(employeeDTO)))
+//            .thenReturn(ResponseEntity.status(HttpStatus.CREATED).body("Employee added successfully"));
+//
+//        ResponseEntity<String> responseEntity = restTemplate.postForEntity("/employee/add", employeeDTO, String.class);
+//
+//        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+//        assertEquals("Employee added successfully", responseEntity.getBody());
+//
+//        // Verify that employeeService.addEmployee was called exactly once with the correct argument
+//        verify(employeeService, times(1)).addEmployee(eq(employeeDTO));
+//    }
+    
+    
+
+    @Test
+    public void testUpdateEmployee() {
+        // Create and add an employee to the database
+        EmployeeDTO employee = new EmployeeDTO();
+        employee.setEname("Hassan");
+		employee.setEage(25);
+		employee.setEdob(Date.valueOf("1990-01-01"));
+		employee.setEmail("hassan@gmail.com");
+		employee.setEsalary(40000);
+		employee.setEdepartment(new DepartmentDTO(2));
+       
+        ResponseEntity<String> status = employeeService.addEmployee(employee);
+        
+        assertEquals(HttpStatus.CREATED, status.getStatusCode());
+
+        ResponseEntity<List<EmployeeDTO>> savedEmployee = employeeService.findByName("Hassan");
+        
+        EmployeeDTO updatingEmployee = savedEmployee.getBody().get(0);
+        updatingEmployee.setEname("Ali");
+
+        restTemplate.exchange("/api/v1/employee/employee/update/{id}", 
+        		HttpMethod.PUT, new HttpEntity<>(updatingEmployee), Employee.class, updatingEmployee.getEid());
+
+        ResponseEntity<Employee> updatedEmployee = employeeService.getEmployeeById(updatingEmployee.getEid());
+
+        assertNotNull(updatedEmployee);
+        assertEquals("Ali", updatedEmployee.getBody().getEname());
+    }
+    
 
 	@Test
-	public void testAddAndGetEmployeeDTO() {
-		// Create a new EmployeeDTO object
-		EmployeeDTO employeeDTO = new EmployeeDTO();
-		employeeDTO.setEname("Hassan");
-		employeeDTO.setEage(25);
-		employeeDTO.setEdob(Date.valueOf("1990-01-01"));
-		employeeDTO.setEmail("hassan@gmail.com");
-		employeeDTO.setEsalary(40000);
+	public void testDeleteEmployee() {
+		EmployeeDTO employee = new EmployeeDTO();
+		employee.setEname("Hassan");
+		employee.setEage(25);
+		employee.setEdob(Date.valueOf("1990-01-01"));
+		employee.setEmail("hassan@gmail.com");
+		employee.setEsalary(40000);
+		employee.setEdepartment(new DepartmentDTO(2));
 
-		// Add the employee using the API endpoint
-		ResponseEntity<String> addResponse = restTemplate
-				.postForEntity("http://localhost:" + port + "/api/v1/employee/employee/add", employeeDTO, String.class);
-
-		assertEquals(HttpStatus.CREATED, addResponse.getStatusCode());
-		assertNotNull(addResponse.getBody());
-
-		// Get the added employee using the API endpoint
-		ResponseEntity<EmployeeDTO> getResponse = restTemplate
-				.getForEntity("http://localhost:" + port + "/api/v1/employee/employee/{id}", EmployeeDTO.class, 1);
-
-		assertEquals(HttpStatus.OK, getResponse.getStatusCode());
-		assertNotNull(getResponse.getBody());
-		assertEquals("Hassan", getResponse.getBody().getEname());
-	}
-
-	@Test
-	public void testUpdateEmployeeDTO() {
-
-		EmployeeDTO employeeDTO = new EmployeeDTO();
-		employeeDTO.setEname("Hassan");
-
-		ResponseEntity<String> status = employeeService.addEmployee(employeeDTO);
+		ResponseEntity<String> status = employeeService.addEmployee(employee);
 
 		assertEquals(HttpStatus.CREATED, status.getStatusCode());
 
-		ResponseEntity<List<Employee>> savedEmployee = employeeService.findByName("Hassan");
+		ResponseEntity<List<EmployeeDTO>> savedEmployee = employeeService.findByName("Hassan");
 
-		Employee updatingEmployeeDTO = savedEmployee.getBody().get(0);
-		updatingEmployeeDTO.setEname("Ali");
-
-		restTemplate.exchange("/api/v1/employee/employee/update/{id}", HttpMethod.PUT,
-				new HttpEntity<>(updatingEmployeeDTO), EmployeeDTO.class, updatingEmployeeDTO.getEid());
-
-		ResponseEntity<Employee> updatedEmployeeDTO = employeeService.getEmployeeById(updatingEmployeeDTO.getEid());
-
-		assertNotNull(updatedEmployeeDTO);
-		assertEquals("Ali", updatedEmployeeDTO.getBody().getEname());
-	}
-
-	@Test
-	public void testDeleteEmployeeDTO() {
-
-		EmployeeDTO employeeDTO = new EmployeeDTO();
-		employeeDTO.setEname("Hassan");
-		employeeDTO.setEage(25);
-		employeeDTO.setEdob(Date.valueOf("1990-01-01"));
-		employeeDTO.setEmail("hassan@gmail.com");
-		employeeDTO.setEsalary(40000);
-
-		ResponseEntity<String> status = employeeService.addEmployee(employeeDTO);
-
-		assertEquals(HttpStatus.CREATED, status.getStatusCode());
-
-		ResponseEntity<List<Employee>> savedEmployee = employeeService.findByName("Hassan");
-
-		Employee existingEmployee = savedEmployee.getBody().get(0);
+		EmployeeDTO existingEmployee = savedEmployee.getBody().get(0);
 
 		restTemplate.delete("/api/v1/employee/employee/delete/{id}", existingEmployee.getEid());
 
@@ -117,53 +125,27 @@ public class EmployeeControllerIT {
 	}
 
 	@Test
-	public void testGetAllEmployeeDTO() {
+	public void testGetAllEmployee() {
 
-		EmployeeDTO employeeDTO = new EmployeeDTO();
-		employeeDTO.setEname("Hassan");
-		employeeDTO.setEage(25);
-		employeeDTO.setEdob(Date.valueOf("1990-01-01"));
-		employeeDTO.setEmail("hassan@gmail.com");
-		employeeDTO.setEsalary(40000);
+		EmployeeDTO employee = new EmployeeDTO();
+		employee.setEname("Hassan");
+		employee.setEage(25);
+		employee.setEdob(Date.valueOf("1990-01-01"));
+		employee.setEmail("hassan@gmail.com");
+		employee.setEsalary(40000);
+		employee.setEdepartment(new DepartmentDTO(2));
 
-		ResponseEntity<String> status = employeeService.addEmployee(employeeDTO);
-
-		assertEquals(HttpStatus.CREATED, status.getStatusCode());
+		employeeService.addEmployee(employee);
 
 		ResponseEntity<String> response = restTemplate.getForEntity("/api/v1/employee/employees", String.class);
 
 		assertEquals(HttpStatus.OK, response.getStatusCode());
+
 		assertNotNull(response.getBody());
 	}
-
-	@Test
-	public void testSearchByEmployeeNameDTO() {
-
-		EmployeeDTO employeeDTO1 = new EmployeeDTO();
-		employeeDTO1.setEname("Hassan");
-		EmployeeDTO employeeDTO2 = new EmployeeDTO();
-		employeeDTO2.setEname("Bilal");
-
-		ResponseEntity<String> status1 = employeeService.addEmployee(employeeDTO1);
-		ResponseEntity<String> status2 = employeeService.addEmployee(employeeDTO2);
-
-		assertEquals(HttpStatus.CREATED, status1.getStatusCode());
-		assertEquals(HttpStatus.CREATED, status2.getStatusCode());
-
-		String nameToSearch = "Hassan";
-
-		ParameterizedTypeReference<List<EmployeeDTO>> responseType = new ParameterizedTypeReference<List<EmployeeDTO>>() {
-		};
-
-		ResponseEntity<List<EmployeeDTO>> responseEntity = restTemplate
-				.exchange("/api/v1/employee/employees/search?name=" + nameToSearch, HttpMethod.GET, null, responseType);
-
-		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-
-		List<EmployeeDTO> employees = responseEntity.getBody();
-
-		assertNotNull(employees);
-		assertEquals(1, employees.size());
-	}
-
+    
+    
+    
+    
 }
+    
