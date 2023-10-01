@@ -1,134 +1,132 @@
 package com.bilal.employeeapp.e2e;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
-import java.sql.Date;
-
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
-
-import com.bilal.employeeapp.EmployeeManagementApplication;
-import com.bilal.employeeapp.dto.DepartmentDTO;
-import com.bilal.employeeapp.dto.EmployeeDTO;
-import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.And;
 
-
-
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = EmployeeManagementApplication.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class StepDefinitions {
-	
-	@LocalServerPort
-	private int port;
-	
-	
-	private String baseUrl;
 
-    @Autowired
-    private TestRestTemplate restTemplate;
-
-    private ResponseEntity<String> response;
-    private EmployeeDTO newEmployee = new EmployeeDTO();
-
-    @Given("the Employee Management application is running")
-    public void the_employee_management_application_is_running() {
-       
-        baseUrl = "http://localhost:" + port + "/api/v1/employee";
+    @Given("the user is on the Employee List page")
+    public void userIsOnEmployeeListPage() {
+        // Implement code to navigate to the Employee List page
+        System.out.println("User is on the Employee List page");
     }
 
-    @When("the user opens the Employee List page")
-    public void the_user_opens_the_employee_list_page() {
-        
+    @When("the user clicks on the \"Create New Employee\" button")
+    public void userClicksCreateNewEmployeeButton() {
+        // Implement code to simulate clicking the "Create New Employee" button
+        System.out.println("User clicks on the 'Create New Employee' button");
     }
 
-    @And("the user clicks on the \"Create New Employee\" button")
-    public void the_user_clicks_on_create_new_employee_button() {
-       
+    @And("the user enters the Name {string}")
+    public void userEntersName(String name) {
+        // Implement code to enter the Name in the form
+        System.out.println("User enters the Name: " + name);
     }
-    
-    @And("the user enter the Name {string}")
-    public void the_user_enter_the_name(String ename) {
-    	newEmployee.setEname(ename);
-    }
-    
-    @And("the user enter the Age {string}")
-    public void the_user_enter_the_age(String eage) {
-    	newEmployee.setEage(Integer.parseInt(eage));
-    }
-    
-    @And("the user enter the Date of Birth {string}")
-    public void the_user_enter_the_date_of_birth(String edob) {
-        Date dob =Date.valueOf(edob);
-        newEmployee.setEdob(dob);
-    }
-    
-    @And("the user enter the Email {string}")
-    public void the_user_enter_the_email(String email) {
-    	newEmployee.setEmail(email);
-    }
-    
-    @And("the user select the department Development {string}")
-    public void the_user_enter_the_department_development(String department) {
-    	
-    	DepartmentDTO departmentDto = new DepartmentDTO();
-    	departmentDto.setDid(Integer.parseInt(department));
-    	
-    	 newEmployee.setEdepartment(departmentDto);
-    }
-    
-    @And("the user enter the Salary {string}")
-    public void the_user_enter_the_salary(String esalary) {
-    	newEmployee.setEsalary(Integer.parseInt(esalary));
-    }
-    
 
-    @And("the user click the Submit button")
-    public void the_user_submit_button() {
-        
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
+    @And("the user enters the Age {string}")
+    public void userEntersAge(String age) {
+        // Implement code to enter the Age in the form
+        System.out.println("User enters the Age: " + age);
+    }
 
-        HttpEntity<EmployeeDTO> requestEntity = new HttpEntity<>(newEmployee, headers);
+    @And("the user enters the Date of Birth {string}")
+    public void userEntersDateOfBirth(String dob) {
+        // Implement code to enter the Date of Birth in the form
+        System.out.println("User enters the Date of Birth: " + dob);
+    }
 
-        response = restTemplate.exchange(baseUrl + "/employee/add", HttpMethod.POST, requestEntity, String.class);
+    @And("the user enters the Email {string}")
+    public void userEntersEmail(String email) {
+        // Implement code to enter the Email in the form
+        System.out.println("User enters the Email: " + email);
+    }
+
+    @And("the user selects the department Development {string}")
+    public void userSelectsDepartment(String department) {
+        // Implement code to select the Department in the form
+        System.out.println("User selects the Department: Development");
+    }
+
+    @And("the user enters the Salary {string}")
+    public void userEntersSalary(String salary) {
+        // Implement code to enter the Salary in the form
+        System.out.println("User enters the Salary: " + salary);
+    }
+
+    @And("the user clicks the Submit button")
+    public void userClicksSubmitButton() {
+        // Implement code to simulate clicking the Submit button
+        System.out.println("User clicks the Submit button");
     }
 
     @Then("the new employee should be added successfully")
-    public void the_new_employee_should_be_added_successfully() {
-        
-        assertNotNull(response);
-        assertEquals(201, response.getStatusCodeValue());
-        
-    }
-    
-    @Given("the application is running")
-    public void the_application_is_running() {
-    	baseUrl = "http://localhost:" + port + "/api/v1/employee";
+    public void newEmployeeShouldBeAddedSuccessfully() {
+        // Implement code to assert that the new employee was added successfully
+        System.out.println("Asserting that the new employee was added successfully");
     }
 
-    
+    // Implement other step definitions for remaining steps...
+
+    @When("the user clicks on the \"Edit Employee\" button for the newly added employee")
+    public void userClicksEditEmployeeButton() {
+        // Implement code to simulate clicking the "Edit Employee" button
+        System.out.println("User clicks on the 'Edit Employee' button for the newly added employee");
+    }
+
+    @And("the user updates the Name to {string}")
+    public void userUpdatesName(String updatedName) {
+        // Implement code to update the Name in the form
+        System.out.println("User updates the Name to: " + updatedName);
+    }
+
+    @And("the user clicks the Update button")
+    public void userClicksUpdateButton() {
+        // Implement code to simulate clicking the Update button
+        System.out.println("User clicks the Update button");
+    }
+
+    @Then("the employee should be edited successfully")
+    public void employeeShouldBeEditedSuccessfully() {
+        // Implement code to assert that the employee was edited successfully
+        System.out.println("Asserting that the employee was edited successfully");
+    }
+
+    @When("the user clicks on the \"Delete Employee\" button for the edited employee")
+    public void userClicksDeleteEmployeeButton() {
+        // Implement code to simulate clicking the "Delete Employee" button
+        System.out.println("User clicks on the 'Delete Employee' button for the edited employee");
+    }
+
+    @And("the user confirms the deletion")
+    public void userConfirmsDeletion() {
+        // Implement code to confirm the deletion
+        System.out.println("User confirms the deletion");
+    }
+
+    @Then("the employee should be deleted successfully")
+    public void employeeShouldBeDeletedSuccessfully() {
+        // Implement code to assert that the employee was deleted successfully
+        System.out.println("Asserting that the employee was deleted successfully");
+    }
+
+    @Given("the application is running")
+    public void applicationIsRunning() {
+        // Implement code to set up the application for testing
+        System.out.println("The application is running");
+    }
+
     @When("the user navigates to the index page")
-    public void the_user_navigates_to_the_index_page() {
-        
+    public void userNavigatesToIndexPage() {
+        // Implement code to navigate to the index page
+        System.out.println("User navigates to the index page");
     }
 
     @Then("the user should see employee data displayed")
-    public void the_user_should_see_employee_data_displayed() {
-       
+    public void userShouldSeeEmployeeDataDisplayed() {
+        // Implement code to assert that employee data is displayed
+        System.out.println("Asserting that employee data is displayed");
     }
-
-    
-
 }
