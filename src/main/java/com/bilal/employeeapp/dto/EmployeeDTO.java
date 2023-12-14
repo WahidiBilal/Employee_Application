@@ -13,6 +13,7 @@ public class EmployeeDTO {
 	private String email;
 	private Integer esalary;
 	private DepartmentDTO edepartment;
+	private String message;
 	
 	public EmployeeDTO () {
 		
@@ -42,6 +43,14 @@ public class EmployeeDTO {
 		this.esalary = esalary;
 		this.edepartment = edepartment;
 	}
+	
+	
+
+	public EmployeeDTO(String message, EmployeeDTO employeeDTO) {
+		this.message = message;
+	}
+
+
 
 	public Integer getEid() {
 		return eid;
@@ -98,13 +107,21 @@ public class EmployeeDTO {
 	public void setEdepartment(DepartmentDTO edepartment) {
 		this.edepartment = edepartment;
 	}
+	
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
 
 	@Override
 	public String toString() {
 		return "Employee [eid=" + eid + ", ename=" + ename + ", edob=" + edob + ", eage=" + eage + ", email=" + email
 				+ ", esalary=" + esalary + ", edepartment=" + edepartment + "]";
 	}
-
 	
 	
 }

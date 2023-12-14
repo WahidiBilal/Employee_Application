@@ -31,17 +31,6 @@
 			**/dto/*.*
 		</sonar.exclusions>
 	</properties>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.testcontainers</groupId>
-				<artifactId>testcontainers-bom</artifactId>
-				<version>1.19.0</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 	<dependencies>
 		<!-- Spring Boot Dependencies -->
 		<dependency>
@@ -59,6 +48,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<!-- Spring Boot Test Dependencies -->
 		<dependency>
@@ -119,33 +113,39 @@
 			<version>1.1.10</version>
 			<type>pom</type>
 		</dependency>
-		<!-- Test Containners -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.27</version>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<version>1.19.1</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>mysql</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.testcontainers</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>rest-assured</artifactId>
+			<version>1.19.1</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
+			<!-- add plug in for integration test folder-->
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-test-source</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/it/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -172,6 +172,7 @@
 						</goals>
 						<configuration>
 							<includes>
+								<include>**/*IT.java</include>
 								<include>**/*E2E.java</include>
 							</includes>
 						</configuration>
@@ -188,6 +189,10 @@
 						<version>${maven-surefire-plugin.version}</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<!-- Coveralls -->
 			<plugin>
@@ -260,14 +265,18 @@
 						<param>com.bilal.employeeapp.exceptions.*</param>
 					</targetClasses>
 					<excludedTestClasses>
-						<param>com.bilal.employeeapp.controller.WebControllerTest</param>
-						<param>com.bilal.employeeapp.ITWebController.WebControllerIT</param>
+						<param>
+							com.bilal.employeeapp.controller.WebControllerTest</param>
+						<param>
+							com.bilal.employeeapp.ITWebController.WebControllerIT</param>
 						<param>com.bilal.employeeapp.e2e.CucumberTestRunnerE2E</param>
 					</excludedTestClasses>
 					<targetTests>
-						<param>com.bilal.employeeapp.controller.EmployeeControllerTest</param>
+						<param>
+							com.bilal.employeeapp.controller.EmployeeControllerTest</param>
 						<param>com.bilal.employeeapp.service.EmployeeServiceTest</param>
-						<param>com.bilal.employeeapp.ITEmployeeController.EmployeeControllerIT</param>
+						<param>
+							com.bilal.employeeapp.ITEmployeeController.EmployeeControllerIT</param>
 					</targetTests>
 					<avoidCallsTo>
 						<avoidCallsTo>java.util.logging</avoidCallsTo>
@@ -284,6 +293,39 @@
 						<outputFormat>HTML</outputFormat>
 					</outputFormats>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.27.2</version>
+				<configuration>
+					<images>
+						<image>
+							<name>mysql:latest</name>
+							<run>
+								<ports>
+									<port>3306:3306</port>
+								</ports>
+							</run>
+						</image>
+					</images>
+				</configuration>
+				<executions>
+					<execution>
+						<id>docker:start</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>docker:stop</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

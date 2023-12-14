@@ -105,9 +105,9 @@ public class EmployeeControllerTest {
 		EmployeeDTO employee = new EmployeeDTO(2, "Obaid", Date.valueOf("1995-01-01"), 30, "Obaid@gmail.com", 5000,
 				new DepartmentDTO(1));
 
-		when(employeeService.addEmployee(employee)).thenReturn(ResponseEntity.ok("success"));
+		when(employeeService.addEmployee(employee)).thenReturn(ResponseEntity.ok(employee));
 
-		ResponseEntity<String> result = employeeController.addEmployee(employee);
+		ResponseEntity<EmployeeDTO> result = employeeController.addEmployee(employee);
 
 		assertEquals(200, result.getStatusCodeValue());
 	}

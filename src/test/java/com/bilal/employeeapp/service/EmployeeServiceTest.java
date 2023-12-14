@@ -184,10 +184,10 @@ public class EmployeeServiceTest {
 
 		when(iemployeeDao.save(any(Employee.class))).thenReturn(employee);
 
-		ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
+		ResponseEntity<EmployeeDTO> response = employeeService.addEmployee(employeeDTO);
 
 		assertEquals(HttpStatus.CREATED, response.getStatusCode());
-		assertEquals("Employee added successfully", response.getBody());
+		assertEquals("Bilal",response.getBody().getEname());
 	}
 
 	@Test
@@ -198,10 +198,10 @@ public class EmployeeServiceTest {
 		when(iemployeeDao.save(any(Employee.class))).thenReturn(
 				new Employee(-1, "Bilal", Date.valueOf("1995-01-01"), 30, "bilal@gmail.com", 5000, new Department(2)));
 
-		ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
+		ResponseEntity<EmployeeDTO> response = employeeService.addEmployee(employeeDTO);
 
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-		assertEquals("Employee added fail", response.getBody());
+		assertEquals("Employee added fail", response.getBody().getMessage());
 
 		verify(iemployeeDao, times(1)).save(any(Employee.class));
 	}
@@ -217,10 +217,10 @@ public class EmployeeServiceTest {
 
 		when(iemployeeDao.save(employee)).thenThrow(new RuntimeException("Database error"));
 
-		ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
+		ResponseEntity<EmployeeDTO> response = employeeService.addEmployee(employeeDTO);
 
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-		assertEquals("Employee added fail", response.getBody());
+		assertEquals("Employee added fail", response.getBody().getMessage());
 	}
 
 	@Test
@@ -317,10 +317,10 @@ public class EmployeeServiceTest {
 
 		when(iemployeeDao.save(employee)).thenReturn(null);
 
-		ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
+		ResponseEntity<EmployeeDTO> response = employeeService.addEmployee(employeeDTO);
 
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-		assertEquals("Employee added fail", response.getBody());
+		assertEquals("Employee added fail", response.getBody().getMessage());
 	}
 
 	@Test
@@ -329,7 +329,7 @@ public class EmployeeServiceTest {
 
 		when(iemployeeDao.save(any(Employee.class))).thenReturn(null);
 
-		ResponseEntity<String> response = employeeService.addEmployee(employeeDTO);
+		ResponseEntity<EmployeeDTO> response = employeeService.addEmployee(employeeDTO);
 
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
 		assertNotNull(response.getBody());

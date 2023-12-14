@@ -1,6 +1,6 @@
-insert into department(dname) values('admin');
-insert into department(dname) values('marketing');
-insert into department(dname) values('development');
+insert into department(dname) values('Marketing');
+insert into department(dname) values('Development');
+insert into department(dname) values('Sales');
 
 
 	
